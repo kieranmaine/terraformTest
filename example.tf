@@ -58,16 +58,25 @@ resource "aws_security_group" "allow_all" {
 }
 
 resource "aws_launch_configuration" "simple_lc" {
-  name                        = "simple_lc"
-  image_id                    = "ami-15996268"
+  name_prefix                 = "simple_lc_"
+  image_id                    = "ami-2757f631"                         # LAMP AMI"ami-15996268"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   security_groups             = ["${aws_security_group.allow_all.id}"]
   key_name                    = "terraform"
+
+  user_data = <<EOF
+#cloud-config
+repo_update: true
+repo_upgrade: all
+
+packages:
+ - apache2
+  EOF
 }
 
 resource "aws_autoscaling_group" "simple_asg" {
-  name                      = "simple_asg"
+  name_prefix               = "simple_asg_"
   max_size                  = 4
   min_size                  = 1
   health_check_grace_period = 300
