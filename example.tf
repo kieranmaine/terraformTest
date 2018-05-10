@@ -3,7 +3,8 @@ provider "aws" {
 }
 
 resource "aws_vpc" "simple_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
 
   tags {
     Name = "Simple VPC"
@@ -71,11 +72,7 @@ repo_update: true
 repo_upgrade: all
 
 packages:
- - apache2
  - curl
-
-runcmd:
- - curl "https://omnitruck.chef.io/install.sh" | sudo bash -s -- -P chefdk -c stable -v 2.5.3
   EOF
 
   lifecycle {
