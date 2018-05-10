@@ -72,7 +72,15 @@ repo_upgrade: all
 
 packages:
  - apache2
+ - curl
+
+runcmd:
+ - curl "https://omnitruck.chef.io/install.sh" | sudo bash -s -- -P chefdk -c stable -v 2.5.3
   EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_autoscaling_group" "simple_asg" {
