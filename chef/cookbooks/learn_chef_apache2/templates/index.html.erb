@@ -1,0 +1,10 @@
+<% 
+require 'json'
+ec2Data = node['ec2']
+%>
+<html>
+  <body>
+    <p>Public Hostname: <%= ec2Data['public_hostname'] %></p>
+    <p>Public IP: <%= ec2Data['public_ipv4'] %></p>    
+  </body>
+</html>
